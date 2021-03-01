@@ -113,20 +113,18 @@ public class Ball {
             double wx2 = ball.wx[0];
             double wx1 = wx[0];
             double dwx = wx2 + wx1;
-            if (Math.abs(dwx) > 1e-3) {
-                Mx += -Math.signum(wx1) * d / 2 * f * mu;
-            }
             double wy2 = ball.wy[0];
             double wy1 = wy[0];
             double dwy = wy2 + wy1;
-            if (Math.abs(dwy) > 1e-3) {
-                My += -Math.signum(wy1) * d / 2 * f * mu;
-            }
             double wz2 = ball.wz[0];
             double wz1 = wz[0];
             double dwz = wz2 + wz1;
-            if (Math.abs(dwz) > 1e-3) {
-                Mz += -Math.signum(wz1) * d / 2 * f * mu;
+            double dw = Math.sqrt(dwx * dwx + dwy * dwy + dwz * dwz);
+            double M = d / 2 * f * mu;
+            if (dw > 1e-3) {
+                Mx += - dwx / dw * M;
+                My += - dwy / dw * M;
+                Mz += - dwz / dw * M;
             }
         }
         // 摩阻
@@ -305,7 +303,7 @@ public class Ball {
         }
         double F = Math.sqrt((Fx + fx + fsx) * (Fx + fx + fsx) + (Fy + fy + fsy) * (Fy + fy + fsy));
         // 更新
-        if (Math.abs(vr) > 1e-5 && F > 1e-3) {
+        if (Math.abs(vr) > 1e-5 || F > 1e-3) {
             // 平动
             x[2] = (Fx + fx + fsx) * dt * dt + 2 * x[1] - x[0];
             y[2] = (Fy + fy + fsy) * dt * dt + 2 * y[1] - y[0];
@@ -334,6 +332,7 @@ public class Ball {
         Mx *= m;
         My *= m;
         Mz *= m;
+        M *= m;
         wx[1] = wx[0] + Mx / J * dt;
         wy[1] = wy[0] + My / J * dt;
         wz[1] = wz[0] + Mz / J * dt;
