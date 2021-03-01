@@ -303,7 +303,7 @@ public class Ball {
         }
         double F = Math.sqrt((Fx + fx + fsx) * (Fx + fx + fsx) + (Fy + fy + fsy) * (Fy + fy + fsy));
         // 更新
-        if (Math.abs(vr) > 1e-5 || F > 1e-3) {
+        if (Math.abs(vr) > 1e-3 || F > 1e-3) {
             // 平动
             x[2] = (Fx + fx + fsx) * dt * dt + 2 * x[1] - x[0];
             y[2] = (Fy + fy + fsy) * dt * dt + 2 * y[1] - y[0];
@@ -325,9 +325,14 @@ public class Ball {
             M = table.Mu * g;
             Mx += -M * Math.cos(theta);
             My += -M * Math.sin(theta);
+        } else {
+            wx[0] = 0;
+            wy[0] = 0;
         }
         if (Math.abs(wz[0]) > 1e-3) {
             Mz += -Math.signum(wz[0]) * table.Mu * g;
+        } else {
+            wz[0] = 0;
         }
         Mx *= m;
         My *= m;
@@ -336,8 +341,10 @@ public class Ball {
         wx[1] = wx[0] + Mx / J * dt;
         wy[1] = wy[0] + My / J * dt;
         wz[1] = wz[0] + Mz / J * dt;
-        if (Math.abs(M) < 1e-3) {
+        if (Math.abs(Mx) < 1e-3) {
             wx[1] = 0;
+        }
+        if (Math.abs(My) < 1e-3) {
             wy[1] = 0;
         }
         if (Math.abs(Mz) < 1e-3) {
