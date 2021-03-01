@@ -305,7 +305,7 @@ public class Ball {
         }
         double F = Math.sqrt((Fx + fx + fsx) * (Fx + fx + fsx) + (Fy + fy + fsy) * (Fy + fy + fsy));
         // 更新
-        if (Math.abs(vr) > 1e-5 || F > 1e-3) {
+        if (Math.abs(vr) > 1e-5 && F > 1e-3) {
             // 平动
             x[2] = (Fx + fx + fsx) * dt * dt + 2 * x[1] - x[0];
             y[2] = (Fy + fy + fsy) * dt * dt + 2 * y[1] - y[0];
