@@ -303,24 +303,22 @@ public class Ball {
                 }
             }
         }
+        double F = Math.sqrt((Fx + fx + fsx) * (Fx + fx + fsx) + (Fy + fy + fsy) * (Fy + fy + fsy));
         // 更新
-        if (Math.abs(vxr) > 1e-3 || Math.abs(Fx + fx + fsx) > 1e-3) {
+        if (Math.abs(vr) > 1e-5 || F > 1e-3) {
             // 平动
             x[2] = (Fx + fx + fsx) * dt * dt + 2 * x[1] - x[0];
+            y[2] = (Fy + fy + fsy) * dt * dt + 2 * y[1] - y[0];
         } else {
             // 纯滚动
             x[2] += wy[0] * d / 2 * dt;
             x[0] = x[1];
-        }
-        if (Math.abs(vyr) > 1e-3 || Math.abs(Fy + fy + fsy) > 1e-3) {
-            y[2] = (Fy + fy + fsy) * dt * dt + 2 * y[1] - y[0];
-        } else {
             y[2] += -wx[0] * d / 2 * dt;
             y[0] = y[1];
         }
         // 旋转
         double w = Math.sqrt(wx[0] * wx[0] + wy[0] * wy[0]);
-        double M;
+        double M = 0;
         if (Math.abs(w) > 1e-3) {
             double theta = Math.acos(wy[0] / w);
             if (wy[0] < 0) {
@@ -339,10 +337,8 @@ public class Ball {
         wx[1] = wx[0] + Mx / J * dt;
         wy[1] = wy[0] + My / J * dt;
         wz[1] = wz[0] + Mz / J * dt;
-        if (Math.abs(Mx) < 1e-3) {
+        if (Math.abs(M) < 1e-3) {
             wx[1] = 0;
-        }
-        if (Math.abs(My) < 1e-3) {
             wy[1] = 0;
         }
         if (Math.abs(Mz) < 1e-3) {
