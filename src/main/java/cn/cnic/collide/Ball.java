@@ -136,7 +136,7 @@ public class Ball {
         double vyr = vy + wx[0] * d / 2;
         double vr = Math.sqrt(vxr * vxr + vyr * vyr);
         double f, fx = 0, fy = 0;
-        if (Math.abs(vr) > 1e-3) {
+        if (Math.abs(vr) > 1e-5) {
             double theta = Math.acos(vxr / vr);
             if (vyr < 0) {
                 theta = 2 * Math.PI - theta;
