@@ -318,7 +318,7 @@ public class Ball {
         double w = Math.sqrt(wx[0] * wx[0] + wy[0] * wy[0]);
         double M = 0;
         if (Math.abs(w) > 1e-3) {
-            double theta = Math.acos(wy[0] / w);
+            double theta = Math.acos(wx[0] / w);
             if (wy[0] < 0) {
                 theta = 2 * Math.PI - theta;
             }
@@ -337,16 +337,9 @@ public class Ball {
         Mx *= m;
         My *= m;
         Mz *= m;
-        M *= m;
         wx[1] = wx[0] + Mx / J * dt;
         wy[1] = wy[0] + My / J * dt;
         wz[1] = wz[0] + Mz / J * dt;
-        if (Math.abs(Mx) < 1e-3) {
-            wx[1] = 0;
-        }
-        if (Math.abs(My) < 1e-3) {
-            wy[1] = 0;
-        }
         if (Math.abs(Mz) < 1e-3) {
             wz[1] = 0;
         }
