@@ -122,9 +122,9 @@ public class Ball {
             double dw = Math.sqrt(dwx * dwx + dwy * dwy + dwz * dwz);
             double M = d / 2 * f * mu;
             if (dw > 1e-3) {
-                Mx += dwx / dw * M;
-                My += dwy / dw * M;
-                Mz += dwz / dw * M;
+                Mx += - dwx / dw * M;
+                My += - dwy / dw * M;
+                Mz += - dwz / dw * M;
             }
         }
         // 摩阻
