@@ -20,7 +20,7 @@ public class Table {
      */
     public double length = 2.54, width = 1.27;
     // 滑动摩擦系数，滚动摩擦系数，库边摩擦系数
-    public double mu = 0.15, Mu = 0.001, muc = 0.15;
+    public double mu = 0.15, Mu = 0.0015, muc = 0.15;
     // 库边弹性系数
     public double k = 1e4;
     // 袋角半径，角袋口内沿最短距离为10.5厘米（±1毫米），腰袋袋口比角袋宽1.5厘米

@@ -134,7 +134,7 @@ public class Ball {
         double vyr = vy + wx[0] * d / 2;
         double vr = Math.sqrt(vxr * vxr + vyr * vyr);
         double f, fx = 0, fy = 0;
-        if (Math.abs(vr) > 1e-5) {
+        if (Math.abs(vr) > 1e-3) {
             double theta = Math.acos(vxr / vr);
             if (vyr < 0) {
                 theta = 2 * Math.PI - theta;
@@ -309,10 +309,8 @@ public class Ball {
             y[2] = (Fy + fy + fsy) * dt * dt + 2 * y[1] - y[0];
         } else {
             // 纯滚动
-            x[2] += wy[0] * d / 2 * dt;
-            x[0] = x[1];
-            y[2] += -wx[0] * d / 2 * dt;
-            y[0] = y[1];
+            x[2] = x[1] + wy[0] * d / 2 * dt;
+            y[2] = y[1] - wx[0] * d / 2 * dt;
         }
         // 旋转
         double w = Math.sqrt(wx[0] * wx[0] + wy[0] * wy[0]);
@@ -325,14 +323,9 @@ public class Ball {
             M = table.Mu * g;
             Mx += -M * Math.cos(theta);
             My += -M * Math.sin(theta);
-        } else {
-            wx[0] = 0;
-            wy[0] = 0;
         }
         if (Math.abs(wz[0]) > 1e-3) {
             Mz += -Math.signum(wz[0]) * table.Mu * g;
-        } else {
-            wz[0] = 0;
         }
         Mx *= m;
         My *= m;
@@ -412,6 +405,7 @@ public class Ball {
             return;
         }
         Graphics graphics = screen.getGraphics();
+        ((Graphics2D)graphics).setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
         int height = screen.getHeight();
         int width = screen.getWidth();
         double tw = table.length + table.margin * 2 + d;
