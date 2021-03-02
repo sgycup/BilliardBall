@@ -17,7 +17,7 @@ public class Cue implements MouseListener, MouseMotionListener {
 
     public double maxStrength = 100;
     public double maxCueAngle = Math.toRadians(85);// 85度
-    public double maxVelocity = 10;
+    public double maxVelocity = 5;
 
     public Table table;
     public Ball white;
@@ -91,7 +91,7 @@ public class Cue implements MouseListener, MouseMotionListener {
         double coss = Math.cos(strokeAngle);
         double sins = Math.sin(strokeAngle);
         double cosc = Math.cos(cueAngle);
-        double sinc = w * Math.sin(cueAngle);
+        double sinc = Math.sin(cueAngle);
 
         double wxp = -w * sins;
         double wyp = 0;
